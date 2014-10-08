@@ -1,7 +1,18 @@
+#ifndef CLIM_H
+#define  CLIM_H
+
 #define for_each_pixel(clim,px,type) \
 for (type *px = (clim)._data; px < (clim)._data + (clim).size(); ++px)
 
-template<typename T>
+#define STB_IMAGE_IMPLEMENTATION
+#include "IO/stb_image.h"
+
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "IO/stb_image_write.h"
+
+namespace clim {
+
+template<typename T = float>
 struct CLim
 {
 	unsigned int _width, _height, _channels;
@@ -11,6 +22,10 @@ struct CLim
 public:
 	CLim() : _width(0), _height(0), _channels(0), _data(0) {};
 
+#ifdef clim_converters
+#include clim_converters
+#endif
+	
 	CLim(const unsigned int w, const unsigned int h = 1, const unsigned int c = 1) {
 
 		const unsigned long dataSize = (unsigned long) w * h * c;
@@ -50,11 +65,13 @@ public:
 	}
 
 	T& operator()(const unsigned int x, const unsigned int y) {
-		return _data[x + y * _width];
+		const unsigned long o = offset(x, y, c);
+		return _data[o];
 	}
 
 	const T& operator()(const unsigned int x, const unsigned int y) const {
-		return _data[x + y * _width];
+		const unsigned long o = offset(x, y, c);
+		return _data[o];
 	}
 
 	T& operator()(const unsigned int x, const unsigned int y, const unsigned int c) {
@@ -81,8 +98,21 @@ public:
 		}
 	}
 	
-	unsigned long offset(const unsigned int x, const unsigned int y, const unsigned int c) const {
-		return x + y * (long)_width + c * (long)_width * (long)_height;
+	T& get(const unsigned int x, const unsigned int y, const unsigned int c) const {
+		const unsigned long o = offset(x, y, c);
+		if (o < size())
+		{
+			return _data[o];
+		}
+		else {
+			// TODO
+			// OUTofBounds
+		}
+	}
+
+	unsigned long offset(const unsigned int x, const unsigned int y, const unsigned int c = 0) const {
+		//return x + y * (long)_width + c * (long)_width * (long)_height;
+		return (x + y * _width) * _channels + c;
 	}
 
 	unsigned int size() const {
@@ -100,17 +130,31 @@ public:
 		for_each_pixel(*this, px, T) \
 			std::cout << (int)*px << " ";
 	}
-
 	
+	void load_from_file(const std::string &fileName) {
 
+		int width, height, elementCount;
+		FILE *file = fopen(fileName.c_str(), "rb");
+		//if (!file)
+			//std::cout << "File not found" << std::endl;
+			// TODO filenotfound exception
+
+		unsigned char* data = stbi_load_from_file(file, &width, &height, &elementCount, 3);
+
+		assign(data, width, height, 3);
+		
+		fclose(file);
+	}
+	
+	void write_to_file(const char* fileName){
+		stbi_write_png(fileName, _width, _height, _channels, _data, _width * _channels);
+	}
+	
 	~CLim() {
-		std::cout << "destroy" << std::endl;
 	}
 
-	/*
-#ifdef clim_converters
-#include clim_converters
-#endif
-	*/
-	
 };
+
+}
+
+#endif

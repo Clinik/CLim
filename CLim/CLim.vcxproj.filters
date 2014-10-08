@@ -16,13 +16,19 @@
     <Filter Include="Modules">
       <UniqueIdentifier>{6061f3c8-4362-4b75-94a0-e158c7135e99}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IO">
+      <UniqueIdentifier>{caf3fcfc-d1d5-42ae-baa2-1b015d82a79c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLim.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CLimConverters.cpp">
+    <ClInclude Include="CLimConverters.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="IO\stb_image.h">
+      <Filter>IO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

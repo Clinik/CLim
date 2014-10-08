@@ -1,17 +1,16 @@
-//#if defined(WIN32)
-
 #include <stdio.h>
 #include <iostream>
 #include <limits.h>
 
+#define clim_converters "CLimConverters.h"
 #include "CLim.h"
+#include "IO/stb_image.h"
 
 
-using namespace std;
 using namespace clim;
 
 template<typename T>
-void toGrayScale2(const CLim<T>& src, CLim<T>& dst)
+void toGrayScale(const CLim<T>& src, CLim<T>& dst)
 {
 	for (int i = 0; i < src._width; ++i)
 	{
@@ -30,9 +29,8 @@ void toGrayScale2(const CLim<T>& src, CLim<T>& dst)
 
 int main() {
 	//unsigned char
-	//CLim<unsigned char> image1(1, 1, 3);
-	CLim<unsigned char> a;
-	CLim<unsigned char> b;
+	CLim<unsigned char> image1(1, 1, 3);
+	CLim<> a;
 	/*
 	//image1.set_all(100);
 	image1(0, 0, 0) = (unsigned char)50;
@@ -52,14 +50,17 @@ int main() {
 	std::cout << image2.size() << std::endl;
 	image3.print();
 	std::cout << image3.size() << std::endl;
-	*/
-	
-	
-	a.load_from_file("lena.jpg");
-	
-	a.write_to_file("out.png");
-	int nn;
-	std::cin >> nn;
-}
 
-//#endif
+	
+	int nn;
+	std::cin >> nn;*/
+	//a.load_from_file("lena.jpg");
+	int width, height, elementCount;
+	std::string fileName = "lena.jpg";
+	FILE *file = fopen(fileName.c_str(), "rb");
+	if (!file)
+		return 0;
+
+	unsigned char* data = stbi_load_from_file(file, &width, &height, &elementCount, 0);
+	fclose(file);
+}
