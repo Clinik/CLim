@@ -6,13 +6,13 @@
 
 #include "CLim.h"
 
-
 using namespace std;
 using namespace clim;
 
 template<typename T>
 void toGrayScale2(const CLim<T>& src, CLim<T>& dst)
 {
+
 	for (int i = 0; i < src._width; ++i)
 	{
 		for (int j = 0; j < src._height; ++j)

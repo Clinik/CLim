@@ -7,10 +7,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLim", "CLim\CLim.vcxproj",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CLimDisplay", "CLimDisplay\CLimDisplay.vcxproj", "{B12702AD-ABFB-343A-A199-8E24837244A3}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OCLConnector", "OCLConnector\OCLConnector.vcxproj", "{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Debug|x64 = Debug|x64
+		OclConsole|Win32 = OclConsole|Win32
+		OclConsole|x64 = OclConsole|x64
 		Release|Win32 = Release|Win32
 		Release|x64 = Release|x64
 	EndGlobalSection
@@ -18,16 +22,32 @@ Global
 		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.Debug|Win32.Build.0 = Debug|Win32
 		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.Debug|x64.ActiveCfg = Debug|Win32
+		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.OclConsole|Win32.ActiveCfg = Debug|Win32
+		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.OclConsole|Win32.Build.0 = Debug|Win32
+		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.OclConsole|x64.ActiveCfg = OclConsole|Win32
 		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.Release|Win32.ActiveCfg = Release|Win32
 		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.Release|Win32.Build.0 = Release|Win32
 		{A87235AA-B0AD-4596-94B8-C7DD8549E785}.Release|x64.ActiveCfg = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|Win32.ActiveCfg = Debug|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.ActiveCfg = Debug|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Debug|x64.Build.0 = Debug|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.OclConsole|Win32.ActiveCfg = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.OclConsole|Win32.Build.0 = Release|Win32
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.OclConsole|x64.ActiveCfg = Release|x64
+		{B12702AD-ABFB-343A-A199-8E24837244A3}.OclConsole|x64.Build.0 = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.ActiveCfg = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|Win32.Build.0 = Release|Win32
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.ActiveCfg = Release|x64
 		{B12702AD-ABFB-343A-A199-8E24837244A3}.Release|x64.Build.0 = Release|x64
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.Debug|Win32.Build.0 = Debug|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.Debug|x64.ActiveCfg = Debug|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.OclConsole|Win32.ActiveCfg = Release|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.OclConsole|Win32.Build.0 = Release|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.OclConsole|x64.ActiveCfg = Release|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.Release|Win32.ActiveCfg = Release|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.Release|Win32.Build.0 = Release|Win32
+		{151D8B6E-9A00-4690-8CC8-27AF1F31C87D}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

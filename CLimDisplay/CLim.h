@@ -1,17 +1,11 @@
 #ifndef CLIM_H
 #define  CLIM_H
 
-typedef unsigned int uint;
-typedef unsigned char uchar;
-
 #define for_each_pixel(clim,px,type) \
 for (type *px = (clim)._data; px < (clim)._data + (clim).size(); ++px)
 
-//#define STB_IMAGE_IMPLEMENTATION
-//#include "IO/stb_image.h"
-
-//#define STB_IMAGE_WRITE_IMPLEMENTATION
-//#include "IO/stb_image_write.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "IO/stb_image.h"
 
 namespace clim {
 
@@ -135,25 +129,23 @@ public:
 	}
 	
 	void load_from_file(const std::string &fileName) {
-		/*
+
 		int width, height, elementCount;
 		FILE *file = fopen(fileName.c_str(), "rb");
-		//if (!file)
+		if (!file)
 			//std::cout << "File not found" << std::endl;
+			throw 20;
 			// TODO filenotfound exception
 
 		unsigned char* data = stbi_load_from_file(file, &width, &height, &elementCount, 3);
 
 		assign(data, width, height, 3);
 		
-		fclose(file);*/
-	}
-	
-	void write_to_file(const char* fileName){
-		//stbi_write_png(fileName, _width, _height, _channels, _data, _width * _channels);
+		fclose(file);
 	}
 	
 	~CLim() {
+		std::cout << "destroy" << std::endl;
 	}
 
 };
