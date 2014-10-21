@@ -1,5 +1,5 @@
 
-__kernel void kernel1(__global unsigned int* flag, __global const unsigned int *data, int width, int height)
+__kernel void kernel1(__global const unsigned int *data, int width, int height)
 {
 	unsigned int ID0 = get_global_id(0);
 	CLim im; 

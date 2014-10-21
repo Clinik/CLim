@@ -17,17 +17,13 @@
   <ItemGroup>
     <None Include="Kernels\kernel.cl" />
     <None Include="Kernels\data\CLim.hcl" />
-    <None Include="kernel2.cl" />
-    <None Include="kernel3.cl" />
+    <None Include="Kernels\kernel2.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Misc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Runner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OCLConnector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OCLConnector_data.cpp">
@@ -45,6 +41,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OCLConnector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -79,19 +79,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="kernel2.cl" />
-    <None Include="kernel3.cl" />
     <None Include="Kernels\data\CLim.hcl" />
     <None Include="Kernels\kernel.cl" />
+    <None Include="Kernels\kernel2.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Misc.cpp" />
-    <ClCompile Include="OCLConnector.cpp" />
     <ClCompile Include="OCLConnector_data.cpp" />
     <ClCompile Include="Runner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLimKernel.h" />
+    <ClInclude Include="Defines.h" />
     <ClInclude Include="Misc.h" />
     <ClInclude Include="OclErrors.h" />
     <ClInclude Include="OCLConnector.h" />

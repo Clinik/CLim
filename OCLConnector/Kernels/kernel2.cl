@@ -1,13 +1,7 @@
-#define STRINGIFY(A) #A
 
-std::string kernel2_source = STRINGIFY(
-
-#pragma OPENCL EXTENSION cl_amd_printf:enable \n
-
-__kernel void test(__global unsigned int* flag)
+__kernel void kernel2()
 {
 	unsigned int ID0 = get_global_id(0);
-	printf((__constant char *)"Kernel2 running, flag: %u \n", *flag);
+	printf((__constant char *)"Kernel2 running %u \n", ID0);
+	//printf((__constant char *)"Kernel1 running, data: %u \n", im.data);
 }
-
-);

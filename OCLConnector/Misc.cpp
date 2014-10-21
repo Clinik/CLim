@@ -6,7 +6,7 @@
 
 #include <GL/glew.h>
 
-#include "CL/cl.hpp"
+#include "CL/cl.h"
 #include "Misc.h"
 
 // Error sztring
