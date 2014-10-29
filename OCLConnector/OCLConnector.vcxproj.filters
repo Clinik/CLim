@@ -13,11 +13,16 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\OCLSpecs">
+      <UniqueIdentifier>{cc78ddc6-0d19-44b6-b6ba-03846664326d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Kernels\kernel.cl" />
     <None Include="Kernels\data\CLim.hcl" />
     <None Include="Kernels\kernel2.cl" />
+    <None Include="Kernels\test.cl" />
+    <None Include="Kernels\test2.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Misc.cpp">
@@ -45,6 +50,9 @@
     </ClInclude>
     <ClInclude Include="Defines.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OCLSequence.h">
+      <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

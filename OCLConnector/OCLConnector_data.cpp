@@ -31,7 +31,7 @@ CLimKernel OCLConnector::makeKernelFromSource(const char* kernel_src, const char
 	/* Build the program                                                    */
 	/************************************************************************/
 	printf("Building program...\n");
-	error = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
+	error = clBuildProgram(program, 1, &deviceUsed, NULL, NULL, NULL);
 	if (error != CL_SUCCESS)
 	{
 		size_t len;

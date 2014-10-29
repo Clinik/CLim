@@ -7,22 +7,25 @@ typedef unsigned char uchar;
 #define for_each_pixel(clim,px,type) \
 for (type *px = (clim)._data; px < (clim)._data + (clim).size(); ++px)
 
-//#define STB_IMAGE_IMPLEMENTATION
-//#include "IO/stb_image.h"
+/*#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#include "IO/stb_image.h"
 
-//#define STB_IMAGE_WRITE_IMPLEMENTATION
-//#include "IO/stb_image_write.h"
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "IO/stb_image_write.h"
+#endif
+*/
 
 namespace clim {
 
 template<typename T = float>
-struct CLim
+class CLim
 {
+public:
 	unsigned int _width, _height, _channels;
 
 	T *_data;
 
-public:
 	CLim() : _width(0), _height(0), _channels(0), _data(0) {};
 
 #ifdef clim_converters
