@@ -23,6 +23,7 @@
     <None Include="Kernels\kernel2.cl" />
     <None Include="Kernels\test.cl" />
     <None Include="Kernels\test2.cl" />
+    <None Include="Kernels\plainKernel.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Misc.cpp">
@@ -32,6 +33,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OCLConnector_data.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OCLSequence.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -52,6 +56,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OCLSequence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Affine.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
   </ItemGroup>

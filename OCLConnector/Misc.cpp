@@ -4,7 +4,7 @@
 #include <string>
 #include <string.h>
 
-#include <GL/glew.h>
+#include "GL/glew.h"
 
 #include "CL/cl.h"
 #include "Misc.h"

@@ -80,6 +80,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="Kernels\data\CLim.hcl" />
+    <None Include="Kernels\plainKernel.cl" />
     <None Include="Kernels\test.cl" />
     <None Include="Kernels\kernel.cl" />
     <None Include="Kernels\kernel2.cl" />
@@ -88,13 +89,15 @@
   <ItemGroup>
     <ClCompile Include="Misc.cpp" />
     <ClCompile Include="OCLConnector_data.cpp" />
+    <ClCompile Include="OCLSequence.cpp" />
     <ClCompile Include="Runner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLimKernel.h" />
     <ClInclude Include="Defines.h" />
-    <ClInclude Include="Misc.h" />
     <ClInclude Include="OCLSequence.h" />
+    <ClInclude Include="Misc.h" />
+    <ClInclude Include="Affine.h" />
     <ClInclude Include="OclErrors.h" />
     <ClInclude Include="OCLConnector.h" />
   </ItemGroup>
