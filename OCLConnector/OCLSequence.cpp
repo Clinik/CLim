@@ -60,11 +60,12 @@ void OCLSequence::addKernel(const char* kernelName,
 }
 
 void OCLSequence::runKernel(CLimKernel &kernel) {
-	printf("Running kernel...\n");
+	printf("Running kernel: %s...\n", kernel.name);
 	cl_int error;
 
 	cl_event event;
 	error = clEnqueueNDRangeKernel(connector->queue, kernel.kernel, 1, NULL, &(kernel.localSize), &(kernel.globalSize), 0, NULL, &event);
+	
 	if (error)
 	{
 		printf("Error: Failed to execute kernel!\n \t %s \n", oclErrorString(error));
@@ -139,30 +140,16 @@ CLimKernel OCLSequence::makeKernelFromSource(const char* kernel_src, const char*
 	return climKernel;
 }
 
-void OCLSequence::addDataSource(OCLSequence &dataSource) {
-	assert(dataSource.mem_object.cl_data != NULL);
-
-	mem_object.construct(dataSource.mem_object);
-}
-
-void OCLSequence::initKernelArgs(bool test) {
-	addKernels();
+void OCLSequence::initKernelArgs() {
 	for each (CLimKernel kernel in kernels)
 	{
 		setImageKernelArgs();
-		if (test)
-			for (int i = 1; i < 1000000; i++)
-			{
-				float f = sin((float)i);
-			}
-
-		printf("in initKernelArgs");
 	}
 
 }
 
 void OCLSequence::execute() {
-	
+	initKernelArgs();
 	for each (CLimKernel kernel in kernels)
 	{
 		runKernel(kernel);

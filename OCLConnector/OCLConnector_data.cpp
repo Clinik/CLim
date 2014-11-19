@@ -23,19 +23,11 @@ void OCLConnector::removeSequence(OCLSequence &sequence) {
 
 void OCLConnector::execute() {
 
-	std::vector<std::thread> threads;
-	int i = 0;
 	for each (OCLSequence *sequence in sequences)
 	{
-		std::thread t(&OCLSequence::initKernelArgs, sequence, i==0 ? true : false);
-		i++;
-		threads.push_back(std::move(t));
+		sequence->addKernels();
 	}
-	for (int i = 0; i < threads.size(); i++)
-	{
-		threads[i].join();
-	}
-	
+
 	for each (OCLSequence *sequence in sequences)
 	{
 		sequence->execute();

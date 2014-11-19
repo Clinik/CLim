@@ -64,5 +64,11 @@
     <ClInclude Include="SeqOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
+    <ClInclude Include="OCLJunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Multioperation.h">
+      <Filter>Header Files\OCLSpecs</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

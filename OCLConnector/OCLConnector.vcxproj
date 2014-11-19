@@ -95,6 +95,8 @@
   <ItemGroup>
     <ClInclude Include="CLimKernel.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Multioperation.h" />
+    <ClInclude Include="OCLJunction.h" />
     <ClInclude Include="OCLSequence.h" />
     <ClInclude Include="Misc.h" />
     <ClInclude Include="ImOperation.h" />

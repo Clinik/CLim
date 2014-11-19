@@ -15,7 +15,7 @@
 #include "CLim.h"
 
 #include "ImOperation.h"
-#include "SeqOperation.h"
+#include "Multioperation.h"
 
 using namespace clim;
 
@@ -23,19 +23,26 @@ using namespace clim;
 
 int main() {
 	OCLConnector clContext;
-	ImOperation imOperation;
-	SeqOperation seqOperation;
-	
-	clContext.addSequence(seqOperation);
-	clContext.addSequence(imOperation);
-	
+	ImOperation imOperation1;
+	ImOperation imOperation2;
+	MultiOperation junction;
 
-	clim::CLim<int> image(200, 100, 3);
-	image.set_all(200);
-	imOperation.addDataSource(image);
-
-	//seqOperation.addDataSource(imOperation);
-	seqOperation.addDataSource(image);
+	// Init source images
+	clim::CLim<int> image1(3, 3);
+	image1.set_all(1);
+	clim::CLim<int> image2(3, 3);
+	image2.set_all(2);
+	// Add operations into the context
+	clContext.addSequence(imOperation1);
+	clContext.addSequence(imOperation2);
+	clContext.addSequence(junction);
+	// Set image sources
+	imOperation1.addDataSource(image1);
+	imOperation2.addDataSource(image2);
+	// junction dependencies
+	junction.addDataSource(imOperation1);
+	junction.addDataSource(imOperation2);
+	// Invoke context
 	clContext.execute();
 	
 	system("pause");

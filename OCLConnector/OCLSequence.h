@@ -17,7 +17,7 @@ public:
 	OCLConnector *connector;
 
 	/************************************************************************/
-	/* The kernels to work with in the queue                           */
+	/* The kernels to work with in the queue                                */
 	/************************************************************************/
 	std::vector<CLimKernel> kernels;
 
@@ -47,6 +47,7 @@ public:
 
 	} clim_mem_object;
 	clim_mem_object mem_object;
+	
 private:
 	void setImageKernelArgs();
 	
@@ -136,12 +137,12 @@ protected:
 	}
 	
 	template<typename Targ>
-	void addKernelArgLocal(CLimKernel &kernel, size_t size, size_t argIndex = -1) {
+	void addKernelArgLocal(CLimKernel &kernel, size_t size, size_t argIndex = NULL) {
 
 		printf("Setting local arg\n");
 		cl_int error;
 
-		if (argIndex == -1) {
+		if (argIndex == NULL) {
 			argIndex = kernel.numArgs++;
 		}
 
@@ -158,7 +159,6 @@ protected:
 
 	CLimKernel makeKernelFromSource(const char* kernel_src, const char* kernelName) const;
 
-	
 public:
 
 	template<typename T>
@@ -167,15 +167,11 @@ public:
 		mem_object.construct(argPtr, dataSource._width, dataSource._height);
 	}
 
-	void addDataSource(OCLSequence &dataSource);
-
-	void addDependantSequence(OCLSequence &sequence);
-
 	virtual void addKernels() = 0;
 
-	void initKernelArgs(bool test);
+	void initKernelArgs();
 
-	void execute();
+	virtual void execute();
 };
 
 #endif
