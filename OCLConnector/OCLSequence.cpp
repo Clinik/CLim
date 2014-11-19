@@ -139,8 +139,30 @@ CLimKernel OCLSequence::makeKernelFromSource(const char* kernel_src, const char*
 	return climKernel;
 }
 
+void OCLSequence::addDataSource(OCLSequence &dataSource) {
+	assert(dataSource.mem_object.cl_data != NULL);
+
+	mem_object.construct(dataSource.mem_object);
+}
+
+void OCLSequence::initKernelArgs(bool test) {
+	addKernels();
+	for each (CLimKernel kernel in kernels)
+	{
+		setImageKernelArgs();
+		if (test)
+			for (int i = 1; i < 1000000; i++)
+			{
+				float f = sin((float)i);
+			}
+
+		printf("in initKernelArgs");
+	}
+
+}
+
 void OCLSequence::execute() {
-	setImageKernelArgs();
+	
 	for each (CLimKernel kernel in kernels)
 	{
 		runKernel(kernel);

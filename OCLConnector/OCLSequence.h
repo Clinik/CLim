@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <assert.h>
 #include "OCLConnector.h"
 
 class OCLSequence {
@@ -16,7 +17,7 @@ public:
 	OCLConnector *connector;
 
 	/************************************************************************/
-	/* The kernels to will work with in the queue                           */
+	/* The kernels to work with in the queue                           */
 	/************************************************************************/
 	std::vector<CLimKernel> kernels;
 
@@ -28,6 +29,17 @@ public:
 	/* Structure to keep track of the image data in the device memory       */
 	/************************************************************************/
 	typedef struct clim_mem_object {
+
+	public:
+		void construct(cl_mem data, int w, int h) {
+			cl_data = data;
+			width = w;
+			height = h;
+		}
+
+		void construct(clim_mem_object &object) {
+			construct(object.cl_data, object.width, object.height);
+		}
 
 		cl_mem cl_data;
 		int width;
@@ -107,14 +119,6 @@ protected:
 
 	void addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex = NULL);
 
-	template<typename T>
-	void addImageSource(clim::CLim<T> &image) {
-		cl_mem argPtr = allocateGlobalMemobject(image._data, image.size());
-		mem_object.cl_data = argPtr;
-		mem_object.width = image._width;
-		mem_object.height = image._height;
-	}
-
 	template<typename Targ>
 	void addKernelArg(CLimKernel &kernel, Targ arg, size_t argIndex = NULL) {
 		printf("Setting stack arg\n");
@@ -154,9 +158,22 @@ protected:
 
 	CLimKernel makeKernelFromSource(const char* kernel_src, const char* kernelName) const;
 
+	
 public:
 
+	template<typename T>
+	void addDataSource(clim::CLim<T> &dataSource) {
+		cl_mem argPtr = allocateGlobalMemobject(dataSource._data, dataSource.size());
+		mem_object.construct(argPtr, dataSource._width, dataSource._height);
+	}
+
+	void addDataSource(OCLSequence &dataSource);
+
+	void addDependantSequence(OCLSequence &sequence);
+
 	virtual void addKernels() = 0;
+
+	void initKernelArgs(bool test);
 
 	void execute();
 };

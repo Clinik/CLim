@@ -166,6 +166,7 @@ public:
 
 	void removeSequence(OCLSequence &sequence);
 
+	void execute();
 };
 
 #endif

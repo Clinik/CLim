@@ -58,7 +58,10 @@
     <ClInclude Include="OCLSequence.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Affine.h">
+    <ClInclude Include="ImOperation.h">
+      <Filter>Header Files\OCLSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="SeqOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
   </ItemGroup>

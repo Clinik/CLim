@@ -4,7 +4,7 @@ __kernel void test(__global unsigned int *data, int width, int height, __local f
 	CLim im; 
 	init(&im, data, width, height);
 	printf((__constant char *)
-		"test running, init image: w(%u), h(%u), data[1]: %u \n", 
+		"test1 running, init image: w(%u), h(%u), data[1]: %u \n", 
 		im._width, im._height, im._data[1]);
 
 	//unsigned int b = im._data[1];

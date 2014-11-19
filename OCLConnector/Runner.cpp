@@ -12,33 +12,31 @@
 
 #define OCL_PROFILING
 #include "OCLConnector.h"
-//#include "OCLSequence.h"
 #include "CLim.h"
 
-#include "Affine.h"
+#include "ImOperation.h"
+#include "SeqOperation.h"
 
 using namespace clim;
 
+#include <thread>
+
 int main() {
-	/*
-	Affine oclSequence;
-	Affine oclSequence3;
+	OCLConnector clContext;
+	ImOperation imOperation;
+	SeqOperation seqOperation;
+	
+	clContext.addSequence(seqOperation);
+	clContext.addSequence(imOperation);
+	
 
-	OCLSequence seq;
-	seq.addTask(oclSequence);
-	seq.addTask(oclSequence3);
-	//oclSequence.execute();
-	printf("size: %d\n", seq.sequence.size());
-	seq.removeTask(oclSequence3);
-	printf("size: %d\n", seq.sequence.size());
+	clim::CLim<int> image(200, 100, 3);
+	image.set_all(200);
+	imOperation.addDataSource(image);
 
-	oclSequence.execute();*/
-	OCLConnector c;
-
-	Affine a;
-	a.setConnector(c);
-	c.addSequence(a);
-	a.addKernels();
-	a.execute();
+	//seqOperation.addDataSource(imOperation);
+	seqOperation.addDataSource(image);
+	clContext.execute();
+	
 	system("pause");
 }
