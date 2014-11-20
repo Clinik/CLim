@@ -66,6 +66,15 @@ public:
 		}
 		printf("Platform IDs successfully obtained!\n\n");
 		
+		error = initDevice(error, platforms, deviceType);
+
+	}
+private:
+	/********************************************************************************/
+	/* Get a device, context and command queue for the platform of type deviceType***/
+	/********************************************************************************/
+	cl_int initDevice(cl_int error, cl_platform_id platforms, cl_device_type deviceType)
+	{
 		/*
 		* Device info
 		*/
@@ -104,15 +113,7 @@ public:
 		}
 
 		/***************************************************************************************************************/
-		error = initDevice(error, platforms, deviceType);
 
-	}
-private:
-	/********************************************************************************/
-	/* Get a device, context and command queue for the platform of type deviceType***/
-	/********************************************************************************/
-	cl_int initDevice(cl_int error, cl_platform_id platforms, cl_device_type deviceType)
-	{
 		/************************************************************************/
 		/* Get devices                                                          */
 		/************************************************************************/

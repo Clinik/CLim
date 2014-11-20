@@ -1,4 +1,4 @@
-__kernel void plain(__global unsigned int *data, int width, int height)
+__kernel void plain()
 {
 	
 }

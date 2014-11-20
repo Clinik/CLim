@@ -7,10 +7,7 @@ class ImOperation : public OCLSequence{
 public:
 	void addKernels()
 	{
-		
 		addKernel("test", { "data/CLim.hcl", "test.cl" }, true, 1, 1, 1);
-
-		//addKernel("plain", { "data/CLim.hcl", "plainKernel.cl" }, true, 1, 1, 1);
 	}
 
 };

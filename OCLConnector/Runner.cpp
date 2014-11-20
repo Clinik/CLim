@@ -16,12 +16,14 @@
 
 #include "ImOperation.h"
 #include "Multioperation.h"
+#include "PlainOperation.h"
 
 using namespace clim;
 
 #include <thread>
 
-int main() {
+void operationExample() {
+
 	OCLConnector clContext;
 	ImOperation imOperation1;
 	ImOperation imOperation2;
@@ -44,6 +46,18 @@ int main() {
 	junction.addDataSource(imOperation2);
 	// Invoke context
 	clContext.execute();
-	
+}
+
+void plainExample() {
+	OCLConnector clContext;
+	PlainOperation plainOperation;
+	clContext.addSequence(plainOperation);
+	clContext.execute();
+}
+
+int main() {
+
+	//operationExample();
+	plainExample();
 	system("pause");
 }
