@@ -16,6 +16,12 @@
     <Filter Include="Header Files\OCLSpecs">
       <UniqueIdentifier>{cc78ddc6-0d19-44b6-b6ba-03846664326d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Executers">
+      <UniqueIdentifier>{da971784-3d9f-4a98-9323-4e0d04c0c761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\OCLBase">
+      <UniqueIdentifier>{4ae71894-e9ba-4084-9997-f529fc533133}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Kernels\kernel.cl" />
@@ -24,6 +30,7 @@
     <None Include="Kernels\test.cl" />
     <None Include="Kernels\test2.cl" />
     <None Include="Kernels\plainKernel.cl" />
+    <None Include="Kernels\subtract.cl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Misc.cpp">
@@ -40,38 +47,41 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CLimKernel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Misc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OclErrors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OCLConnector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Defines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OCLSequence.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ImOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
     <ClInclude Include="SeqOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="OCLJunction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Multioperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
     <ClInclude Include="PlainOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="ImSubtract.h">
+      <Filter>Header Files\OCLSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="CLimKernel.h">
+      <Filter>Header Files\Executers</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc.h">
+      <Filter>Header Files\OCLBase</Filter>
+    </ClInclude>
+    <ClInclude Include="OclErrors.h">
+      <Filter>Header Files\OCLBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Header Files\OCLBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CLJunction.h">
+      <Filter>Header Files\Executers</Filter>
+    </ClInclude>
+    <ClInclude Include="CLConnector.h">
+      <Filter>Header Files\OCLBase</Filter>
+    </ClInclude>
+    <ClInclude Include="CLSequence.h">
+      <Filter>Header Files\Executers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

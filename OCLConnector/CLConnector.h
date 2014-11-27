@@ -11,11 +11,11 @@
 #include "CLim.h"
 #include "CLimKernel.h"
 
-//class OCLConnector;
-//#include "OCLSequence.h"
-class OCLSequence;
+//class CLConnector;
+//#include "CLSequence.h"
+class CLSequence;
 
-class OCLConnector {
+class CLConnector {
 public:
 	/************************************************************************/
 	/* Variables to connect with the OpenCl context                         */
@@ -24,11 +24,16 @@ public:
 	cl_context context;
 	cl_command_queue  queue;
 
+	/************************************************************************/
+	/* Device infos                                                         */
+	/************************************************************************/
+	cl_int MAX_WORKGROUP_SIZE;
+
 public:
 	/************************************************************************/
 	/* In the constructor we initialize the context to work with            */
 	/************************************************************************/
-	OCLConnector(cl_device_type deviceType = CL_DEVICE_TYPE_GPU) {
+	CLConnector(cl_device_type deviceType = CL_DEVICE_TYPE_GPU) {
 		cl_int error;
 
 		/*
@@ -104,8 +109,9 @@ private:
 			printf("  CL_DEVICE_MAX_WORK_GROUP_SIZE = %u\n", (unsigned int)buf_uint);
 			error = clGetDeviceInfo(devicesStore[i], CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, sizeof(buf_uint), &buf_uint, NULL);
 			printf("  CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS = %u\n", (unsigned int)buf_uint);
-			error = clGetDeviceInfo(devicesStore[i], CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(buf_uint), &buf_uint, NULL);
-			printf("  CL_DEVICE_MAX_WORK_ITEM_SIZES = %u\n", (unsigned int)buf_uint);
+			size_t wItemSizes[3];
+			error = clGetDeviceInfo(devicesStore[i], CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(wItemSizes), &wItemSizes, NULL);
+			printf("  CL_DEVICE_MAX_WORK_ITEM_SIZES = %u x %u x %u %\n", wItemSizes[0], wItemSizes[1], wItemSizes[2]);
 			error = clGetDeviceInfo(devicesStore[i], CL_DEVICE_MAX_CLOCK_FREQUENCY, sizeof(buf_uint), &buf_uint, NULL);
 			printf("  DEVICE_MAX_CLOCK_FREQUENCY = %u\n", (unsigned int)buf_uint);
 			error = clGetDeviceInfo(devicesStore[i], CL_DEVICE_GLOBAL_MEM_SIZE, sizeof(buf_ulong), &buf_ulong, NULL);
@@ -158,14 +164,14 @@ private:
 		printf("------------------------------------------------------------------\n\n");	return error;
 	}
 public:
-	~OCLConnector(){};
+	~CLConnector(){};
 	
 protected:
-	std::list<OCLSequence*> sequences;
+	std::list<CLSequence*> sequences;
 public:
-	void addSequence(OCLSequence &sequence);
+	void addSequence(CLSequence &sequence);
 
-	void removeSequence(OCLSequence &sequence);
+	void removeSequence(CLSequence &sequence);
 
 	void execute();
 };

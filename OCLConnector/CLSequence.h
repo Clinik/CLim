@@ -3,18 +3,19 @@
 
 #include <list>
 #include <vector>
+#include <map>
 #include "CLim.h"
 #include "CLimKernel.h"
 
 #include <iostream>
 #include <fstream>
 #include <assert.h>
-#include "OCLConnector.h"
+#include "CLConnector.h"
 
-class OCLSequence {
+class CLSequence {
 public:
-	OCLSequence() {};
-	OCLConnector *connector;
+	CLSequence() {};
+	CLConnector *connector;
 
 	/************************************************************************/
 	/* The kernels to work with in the queue                                */
@@ -23,7 +24,12 @@ public:
 
 public:
 
-	void setConnector(OCLConnector &connector);
+	void setConnector(CLConnector &connector);
+
+private:
+	void setImageKernelArgs();
+	
+protected:
 
 	/************************************************************************/
 	/* Structure to keep track of the image data in the device memory       */
@@ -46,12 +52,10 @@ public:
 		int height;
 
 	} clim_mem_object;
-	clim_mem_object mem_object;
-	
-private:
-	void setImageKernelArgs();
-	
-protected:
+
+	std::vector<clim_mem_object> dataSources;
+	std::map<clim_mem_object*, CLimKernel*> kernelToMemObj;
+	std::vector<cl_mem> kernelOutputs;
 
 	/************************************************************************/
 	/* Specialization tools                                                 */
@@ -73,14 +77,19 @@ protected:
 		cl_int error;
 
 		argPtr = clCreateBuffer(connector->context, flags, size * sizeof(Targ), NULL, &error);
-
-		printf("Moving data to the GPU...\n");
-		error = clEnqueueWriteBuffer(connector->queue, argPtr, CL_TRUE, 0, size * sizeof(Targ), &arg[0], 0, NULL, NULL);
-		if (error != CL_SUCCESS)
+		if (flags != CL_MEM_READ_ONLY)
 		{
-			printf("Error: Failed to write to source array!\n \t %s \n", oclErrorString(error));
+			printf("Moving data to the GPU...\n");
+			error = clEnqueueWriteBuffer(connector->queue, argPtr, CL_TRUE, 0, size * sizeof(Targ), &arg[0], 0, NULL, NULL);
+			if (error != CL_SUCCESS)
+			{
+				printf("Error: Failed to write to source array!\n \t %s \n", oclErrorString(error));
+			}
+			printf("Data successfully copied to GPU's global memory!\n");
 		}
-		printf("Data successfully copied to GPU's global memory!\n");
+		else {
+			kernelOutputs.push_back(argPtr);
+		}
 
 		return argPtr;
 	}
@@ -89,30 +98,15 @@ protected:
 	cl_mem addKernelArg(CLimKernel &kernel,
 		Targ* arg, size_t size,
 		size_t argIndex = -1, cl_mem_flags flags = CL_MEM_READ_WRITE) {
-
-		printf("Setting pointer arg\n");
-
-		if (argIndex == -1) {
-			argIndex = kernel.numArgs++;
-		}
-
-		cl_mem argPtr;
 		cl_int error;
-
-		argPtr = clCreateBuffer(connector->context, flags, size * sizeof(Targ), NULL, &error);
-
-		printf("Moving data to the GPU...\n");
-		error = clEnqueueWriteBuffer(connector->queue, argPtr, CL_TRUE, 0, size * sizeof(Targ), &arg[0], 0, NULL, NULL);
-		if (error != CL_SUCCESS)
-		{
-			printf("Error: Failed to write to source array!\n \t %s \n", oclErrorString(error));
-		}
-		printf("Data successfully copied to GPU's global memory!\n");
+		
+		cl_mem argPtr = allocateGlobalMemobject(arg, size, flags);
 
 		error = clSetKernelArg(kernel.kernel, argIndex, sizeof(cl_mem), &argPtr);
 		if (error != CL_SUCCESS) {
 			printf("ERROR: Failed to set kernel arguments!\n \t %s \n", oclErrorString(error));
 		}
+
 		printf("Kernel arguments successfully set!\n\n");
 
 		return argPtr;
@@ -153,7 +147,9 @@ protected:
 		printf("Kernel arguments successfully set!\n\n");
 	}
 
-	void addKernel(const char* kernelName, const std::initializer_list<const char*> sources, bool isImageKernel, const size_t workDim, const size_t localSize, const size_t globalSize);
+	void addKernel(const char* kernelName, 
+		const std::initializer_list<const char*> sources, bool isImageKernel, 
+		const size_t workDim, size_t globalSize[], size_t localSize[]);
 
 	void runKernel(CLimKernel &kernel);
 
@@ -162,12 +158,32 @@ protected:
 public:
 
 	template<typename T>
-	void addDataSource(clim::CLim<T> &dataSource) {
+	clim_mem_object addDataSource(clim::CLim<T> &dataSource) {
 		cl_mem argPtr = allocateGlobalMemobject(dataSource._data, dataSource.size());
-		mem_object.construct(argPtr, dataSource._width, dataSource._height);
+		//mem_object.construct(argPtr, dataSource._width, dataSource._height);
+		clim_mem_object memObj;
+		memObj.construct(argPtr, dataSource._width, dataSource._height);
+		return memObj;
+	}
+
+	template<typename T>
+	void addDataSource(clim::CLim<T> &dataSource, CLimKernel &kernel) {
+		cl_mem argPtr = allocateGlobalMemobject(dataSource._data, dataSource.size());
+		clim_mem_object memObj;
+		memObj.construct(argPtr, dataSource._width, dataSource._height);
+		//kernelToMemObj.insert(&kernel, memObj);
 	}
 
 	virtual void addKernels() = 0;
+
+	/* 
+	* This method called after the kernels in this sequence are done executing
+	* Variables that depend on the kernel execution will get their final value at this phase:
+	*	kernelOutputs - vector of output objects [CL memory handle, width, height of the object]
+	*/
+	virtual void postExecute() {
+
+	}
 
 	void initKernelArgs();
 

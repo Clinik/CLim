@@ -2,34 +2,35 @@
 #include <iostream>
 #include "GL/glew.h"
 
-#include "OCLConnector.h"
-#include "OCLSequence.h"
+#include "CLConnector.h"
+#include "CLSequence.h"
 
 #include <thread>
 #include <vector>
 #include <iosfwd>
 
-void OCLConnector::addSequence(OCLSequence &sequence) {
+void CLConnector::addSequence(CLSequence &sequence) {
 	sequence.connector = this;
 	sequences.push_back(&sequence);
 }
 
-void OCLConnector::removeSequence(OCLSequence &sequence) {
+void CLConnector::removeSequence(CLSequence &sequence) {
 	sequences.remove_if(
-		[&](const OCLSequence *current){
+		[&](const CLSequence *current){
 		return(current == &sequence);
 	});
 }
 
-void OCLConnector::execute() {
+void CLConnector::execute() {
 
-	for each (OCLSequence *sequence in sequences)
+	for each (CLSequence *sequence in sequences)
 	{
 		sequence->addKernels();
 	}
 
-	for each (OCLSequence *sequence in sequences)
+	for each (CLSequence *sequence in sequences)
 	{
 		sequence->execute();
+		sequence->postExecute();
 	}
 }

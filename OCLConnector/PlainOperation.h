@@ -1,11 +1,11 @@
-#include "OCLSequence.h"
+#include "CLSequence.h"
 
-class PlainOperation : public OCLSequence {
+class PlainOperation : public CLSequence {
 
 
 	virtual void addKernels()
 	{
-		addKernel("plain", { "plainKernel.cl" }, false, 1, 1, 1);
+//		addKernel("plain", { "plainKernel.cl" }, false, 1, 1, 1);
 	}
 
 };

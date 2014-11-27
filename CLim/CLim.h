@@ -1,20 +1,23 @@
 #ifndef CLIM_H
 #define  CLIM_H
+/*
+#include <string>
+#define STBI_ASSERT(x)
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#include "IO/stb_image.h"
+#endif
 
+#ifndef STB_IMAGE_WRITE_IMPLEMENTATION
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "IO/stb_image_write.h"
+#endif
+*/
 typedef unsigned int uint;
 typedef unsigned char uchar;
 
 #define for_each_pixel(clim,px,type) \
 for (type *px = (clim)._data; px < (clim)._data + (clim).size(); ++px)
-
-/*#ifndef STB_IMAGE_IMPLEMENTATION
-#define STB_IMAGE_IMPLEMENTATION
-#include "IO/stb_image.h"
-
-#define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "IO/stb_image_write.h"
-#endif
-*/
 
 namespace clim {
 
@@ -133,27 +136,27 @@ public:
 	// TODO
 	// Remove this is only for testing
 	void print() {
-		for_each_pixel(*this, px, T) \
+		for_each_pixel(*this, px, T) 
 			std::cout << (int)*px << " ";
 	}
-	
-	void load_from_file(const std::string &fileName) {
+
+	void load_from_file(std::string &fileName) {
 		/*
 		int width, height, elementCount;
+
 		FILE *file = fopen(fileName.c_str(), "rb");
-		//if (!file)
-			//std::cout << "File not found" << std::endl;
-			// TODO filenotfound exception
-
 		unsigned char* data = stbi_load_from_file(file, &width, &height, &elementCount, 3);
+		//if (!file)
+		//std::cout << "File not found" << std::endl;
+		// TODO filenotfound exception
 
-		assign(data, width, height, 3);
-		
+		assign((const int*)data, width, height, 3);
+
 		fclose(file);*/
 	}
-	
+
 	void write_to_file(const char* fileName){
-		//stbi_write_png(fileName, _width, _height, _channels, _data, _width * _channels);
+		/*stbi_write_png(fileName, _width, _height, _channels, _data, _width * _channels); */
 	}
 	
 	~CLim() {

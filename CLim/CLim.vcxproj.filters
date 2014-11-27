@@ -21,11 +21,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CLim.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CLimConverters.h">
       <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="CLim.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IO\stb_image.h">
       <Filter>IO</Filter>

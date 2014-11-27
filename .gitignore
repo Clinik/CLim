@@ -5,6 +5,7 @@
 *.suo
 *.user
 *.sln.docstates
+OCLConnector/Lib/GLEW32.lib
 
 # Build results
 

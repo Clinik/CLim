@@ -1,6 +1,6 @@
-#include "OCLSequence.h"
+#include "CLSequence.h"
 
-class SeqOperation : public OCLSequence {
+class SeqOperation : public CLSequence {
 
 public:
 	void addKernels()

@@ -81,6 +81,7 @@
   <ItemGroup>
     <None Include="Kernels\data\CLim.hcl" />
     <None Include="Kernels\plainKernel.cl" />
+    <None Include="Kernels\subtract.cl" />
     <None Include="Kernels\test.cl" />
     <None Include="Kernels\kernel.cl" />
     <None Include="Kernels\kernel2.cl" />
@@ -95,13 +96,14 @@
   <ItemGroup>
     <ClInclude Include="CLimKernel.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="ImSubtract.h" />
     <ClInclude Include="Multioperation.h" />
-    <ClInclude Include="OCLJunction.h" />
-    <ClInclude Include="OCLSequence.h" />
+    <ClInclude Include="CLJunction.h" />
+    <ClInclude Include="CLSequence.h" />
     <ClInclude Include="Misc.h" />
     <ClInclude Include="ImOperation.h" />
     <ClInclude Include="OclErrors.h" />
-    <ClInclude Include="OCLConnector.h" />
+    <ClInclude Include="CLConnector.h" />
     <ClInclude Include="PlainOperation.h" />
     <ClInclude Include="SeqOperation.h" />
   </ItemGroup>

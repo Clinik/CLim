@@ -1,13 +1,13 @@
 #ifndef ImOperation_H
 #define ImOperation_H
 
-#include "OCLSequence.h"
+#include "CLSequence.h"
 
-class ImOperation : public OCLSequence{
+class ImOperation : public CLSequence{
 public:
 	void addKernels()
 	{
-		addKernel("test", { "data/CLim.hcl", "test.cl" }, true, 1, 1, 1);
+		//addKernel("test", { "data/CLim.hcl", "test.cl" }, true, 1, 1, 1);
 	}
 
 };

@@ -1,4 +1,3 @@
-//#if defined(WIN32)
 
 #include <stdio.h>
 #include <iostream>
@@ -55,9 +54,9 @@ int main() {
 	*/
 	
 	
-	a.load_from_file("lena.jpg");
+//	a.load_from_file("lena.jpg");
 	
-	a.write_to_file("out.png");
+//	a.write_to_file("out.png");
 	int nn;
 	std::cin >> nn;
 }

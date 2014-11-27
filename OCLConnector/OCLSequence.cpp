@@ -1,42 +1,51 @@
-#include "OCLSequence.h"
+#include "CLSequence.h"
 
-void OCLSequence::setConnector(OCLConnector &connector) {
+void CLSequence::setConnector(CLConnector &connector) {
 	this->connector = &connector;
 }
 
-void OCLSequence::setImageKernelArgs() {
+void CLSequence::setImageKernelArgs() {
+	/*
+	for (auto& mapping : kernelToMemObj)
+	{
+		addKernelArg(*(mapping.second), (mapping.first->cl_data));
+	}*/
 	for each (CLimKernel kernel in kernels)
 	{
 		if (kernel.isImageKernel)
 		{
-			addKernelArg(kernel, mem_object.cl_data, 0);
-			addKernelArg(kernel, mem_object.width, 1);
-			addKernelArg(kernel, mem_object.height, 2);
+			addKernelArg(kernel, dataSources[0].cl_data);
+			addKernelArg(kernel, dataSources[1].cl_data);
+			//addKernelArg(kernel, dataSources[0].width, 1);
+			//addKernelArg(kernel, dataSources[0].height, 2);
 		}
 	}
+
 }
 
-void OCLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex) {
+void CLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex) {
 
 	cl_int error;
 
 	printf("Setting buffer arg\n");
 
 	if (argIndex == NULL) {
-		argIndex = kernel.numArgs++;
+		argIndex = kernel.numArgs;
 	}
 
 	error = clSetKernelArg(kernel.kernel, argIndex, sizeof(cl_mem), &argPtr);
 	if (error != CL_SUCCESS) {
 		printf("ERROR: Failed to set kernel arguments!\n \t %s \n", oclErrorString(error));
 	}
-	printf("Kernel arguments successfully set!\n\n");
+
+	printf("Kernel arguments[%d] successfully set!\n\n", kernel.numArgs);
+	kernel.numArgs = kernel.numArgs + 1;
 }
 
-void OCLSequence::addKernel(const char* kernelName, 
+void CLSequence::addKernel(const char* kernelName, 
 	const std::initializer_list<const char*> sources, 
 	bool isImageKernel, 
-	const size_t workDim, const size_t localSize, const size_t globalSize) {
+	const size_t workDim, size_t globalSize[], size_t localSize[]) {
 
 	std::string src = "";
 
@@ -50,7 +59,7 @@ void OCLSequence::addKernel(const char* kernelName,
 	}
 	const char* cstr_src = src.c_str();
 	CLimKernel kernel = makeKernelFromSource(cstr_src, kernelName);
-	kernel.setWorkSizes(workDim, localSize, globalSize);
+	kernel.setWorkSizes(workDim, globalSize, localSize);
 	if (isImageKernel)
 	{
 		kernel.isImageKernel = isImageKernel;
@@ -59,12 +68,20 @@ void OCLSequence::addKernel(const char* kernelName,
 	kernels.push_back(kernel);
 }
 
-void OCLSequence::runKernel(CLimKernel &kernel) {
+void CLSequence::runKernel(CLimKernel &kernel) {
 	printf("Running kernel: %s...\n", kernel.name);
 	cl_int error;
 
+	size_t globalThreads[] = { 3, 3 };
+	size_t localThreads[] = { 3, 1 };
+
 	cl_event event;
-	error = clEnqueueNDRangeKernel(connector->queue, kernel.kernel, 1, NULL, &(kernel.localSize), &(kernel.globalSize), 0, NULL, &event);
+	error = clEnqueueNDRangeKernel(
+		connector->queue, kernel.kernel, 
+		2,
+		NULL,
+		globalThreads, localThreads,
+		0, NULL, &event);
 	
 	if (error)
 	{
@@ -88,7 +105,7 @@ void OCLSequence::runKernel(CLimKernel &kernel) {
 #endif // OCL_PROFILING
 }
 
-CLimKernel OCLSequence::makeKernelFromSource(const char* kernel_src, const char* kernelName) const {
+CLimKernel CLSequence::makeKernelFromSource(const char* kernel_src, const char* kernelName) const {
 	cl_int error;
 
 	cl_program program;
@@ -140,7 +157,7 @@ CLimKernel OCLSequence::makeKernelFromSource(const char* kernel_src, const char*
 	return climKernel;
 }
 
-void OCLSequence::initKernelArgs() {
+void CLSequence::initKernelArgs() {
 	for each (CLimKernel kernel in kernels)
 	{
 		setImageKernelArgs();
@@ -148,7 +165,7 @@ void OCLSequence::initKernelArgs() {
 
 }
 
-void OCLSequence::execute() {
+void CLSequence::execute() {
 	initKernelArgs();
 	for each (CLimKernel kernel in kernels)
 	{
