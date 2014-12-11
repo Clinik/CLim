@@ -116,9 +116,11 @@
     <ClInclude Include="CLim.h" />
     <ClInclude Include="CLimConverters.h" />
     <ClInclude Include="IO\stb_image.h" />
+    <ClInclude Include="stbFile.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Runner.cpp" />
+    <ClCompile Include="stbFile.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

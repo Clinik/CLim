@@ -30,9 +30,15 @@
     <ClInclude Include="IO\stb_image.h">
       <Filter>IO</Filter>
     </ClInclude>
+    <ClInclude Include="stbFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Runner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stbFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

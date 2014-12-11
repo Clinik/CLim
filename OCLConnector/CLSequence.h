@@ -11,6 +11,7 @@
 #include <fstream>
 #include <assert.h>
 #include "CLConnector.h"
+#include "Misc.h"
 
 class CLSequence {
 public:
@@ -149,7 +150,7 @@ protected:
 
 	void addKernel(const char* kernelName, 
 		const std::initializer_list<const char*> sources, bool isImageKernel, 
-		const size_t workDim, size_t globalSize[], size_t localSize[]);
+		const NDRange &ndRange, const NDRange &localndRange);
 
 	void runKernel(CLimKernel &kernel);
 

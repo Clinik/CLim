@@ -52,12 +52,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;CL_DIR="$(ProjectDir)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../CLim;$(AMDAPPSDKROOT)\include;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../CLim;$(AMDAPPSDKROOT)\include;$(CUDA_PATH)/include;$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../Debug;$(AMDAPPSDKROOT)\lib\x86;$(SolutionDir)\Lib\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../Debug;$(AMDAPPSDKROOT)\lib\x86;$(CUDA_PATH)/lib/win32;$(SolutionDir)\Lib\</AdditionalLibraryDirectories>
       <AdditionalDependencies>CLim.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;OpenCL.lib;GLEW32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
@@ -82,6 +82,7 @@
     <None Include="Kernels\data\CLim.hcl" />
     <None Include="Kernels\plainKernel.cl" />
     <None Include="Kernels\subtract.cl" />
+    <None Include="Kernels\subtract2.cl" />
     <None Include="Kernels\test.cl" />
     <None Include="Kernels\kernel.cl" />
     <None Include="Kernels\kernel2.cl" />

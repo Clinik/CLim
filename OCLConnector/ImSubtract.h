@@ -6,49 +6,57 @@
 
 class ImSubtract : public CLSequence {
 
-	int *data;
+	unsigned char *data;
 	int outSize;
 
+	int outWidth, outHeight;
+
+	std::string name;
+	std::string fileName;
+	NDRange global;
+	NDRange local;
+
 public:
+	ImSubtract(const std::string kernelname, const NDRange &global, const NDRange &local) {
+		name = kernelname.c_str();
+		fileName = (name + ".cl").c_str();
+		this->global = global;
+		this->local = local;
+	}
+
 
 	template<typename T>
 	void addImages(clim::CLim<T> im1, clim::CLim<T> im2) {
 		dataSources.push_back(addDataSource(im1));
 		dataSources.push_back(addDataSource(im2));
-		outSize = im1._width * im1._height;
-		data = new int[outSize];
-		printf("output: %d", data[1]);
+		outWidth = im1._width;
+		outHeight = im1._height;
+		outSize = im1._width * im1._height*3;
+		data = new unsigned char[outSize];
 	}
 
 	void addKernels()
 	{
-
-		size_t *globalThreads;
-		size_t *localThreads;
-		addKernel("subtract", { "subtract.cl" }, true, 1, NULL, NULL);
+		addKernel(name.c_str(), { fileName.c_str() }, true, global, local);
 		
 		// Input
 		kernelToMemObj.insert(std::make_pair(&dataSources[0], &kernels[0]));
 		kernelToMemObj.insert(std::make_pair(&dataSources[1], &kernels[0]));
 		// Output
-
 		addKernelArg(kernels[0], &data[0], outSize, 2, CL_MEM_READ_ONLY);
 	}
 
 	void postExecute() {
-		size_t imSize = sizeof(data);
-		int *d = new int[9]; d[1] = 3;
+		unsigned char *d = new unsigned char[outSize];
 		cl_int error;
-
-		error = clEnqueueReadBuffer(connector->queue,
-			kernelOutputs[0], CL_TRUE, 0, 9 * sizeof(int), d, 0, NULL, NULL);
-		clFinish(connector->queue);
 		
-		for (int i = 0; i < 3; i++){
-			for (int j = 0; j < 3; j++)
-				printf("%d ", d[i + j * 3]);
-			printf("\n");
-		}
+		clFinish(connector->queue);
+		error = clEnqueueReadBuffer(connector->queue,
+		kernelOutputs[0], CL_TRUE, 0, outSize * sizeof(unsigned char), d, 0, NULL, NULL);
+		
+		stbFile f;
+		std::string fileName = ("../images/" + name + ".png");
+		f.write_to_file(std::string(fileName.c_str()), outWidth, outHeight, 3, d);
 	}
 
 

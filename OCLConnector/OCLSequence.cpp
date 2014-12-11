@@ -5,19 +5,16 @@ void CLSequence::setConnector(CLConnector &connector) {
 }
 
 void CLSequence::setImageKernelArgs() {
-	/*
-	for (auto& mapping : kernelToMemObj)
-	{
-		addKernelArg(*(mapping.second), (mapping.first->cl_data));
-	}*/
+	
 	for each (CLimKernel kernel in kernels)
 	{
 		if (kernel.isImageKernel)
 		{
-			addKernelArg(kernel, dataSources[0].cl_data);
-			addKernelArg(kernel, dataSources[1].cl_data);
-			//addKernelArg(kernel, dataSources[0].width, 1);
-			//addKernelArg(kernel, dataSources[0].height, 2);
+			for (int i = 0; i < dataSources.size();i++)
+			{
+				addKernelArg(kernel, dataSources[i].cl_data);
+			}
+			
 		}
 	}
 
@@ -45,7 +42,7 @@ void CLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex
 void CLSequence::addKernel(const char* kernelName, 
 	const std::initializer_list<const char*> sources, 
 	bool isImageKernel, 
-	const size_t workDim, size_t globalSize[], size_t localSize[]) {
+	const NDRange &globalndRange, const NDRange &localndRange) {
 
 	std::string src = "";
 
@@ -57,9 +54,11 @@ void CLSequence::addKernel(const char* kernelName,
 			(std::istreambuf_iterator<char>()));
 		src += kernelSource;
 	}
+
 	const char* cstr_src = src.c_str();
 	CLimKernel kernel = makeKernelFromSource(cstr_src, kernelName);
-	kernel.setWorkSizes(workDim, globalSize, localSize);
+	kernel.setglobalNDRange(globalndRange);
+	kernel.setlocalNDRange(localndRange);
 	if (isImageKernel)
 	{
 		kernel.isImageKernel = isImageKernel;
@@ -72,13 +71,13 @@ void CLSequence::runKernel(CLimKernel &kernel) {
 	printf("Running kernel: %s...\n", kernel.name);
 	cl_int error;
 
-	size_t globalThreads[] = { 3, 3 };
-	size_t localThreads[] = { 3, 1 };
+	size_t globalThreads[] = { kernel.globalndRange.getSize(0), kernel.globalndRange.getSize(1), 512 };
+	size_t localThreads[] = { kernel.localndRange.getSize(0), kernel.localndRange.getSize(0), 1 };
 
 	cl_event event;
 	error = clEnqueueNDRangeKernel(
-		connector->queue, kernel.kernel, 
-		2,
+		connector->queue, kernel.kernel,
+		kernel.globalndRange.getDims(),
 		NULL,
 		globalThreads, localThreads,
 		0, NULL, &event);
@@ -86,6 +85,7 @@ void CLSequence::runKernel(CLimKernel &kernel) {
 	if (error)
 	{
 		printf("Error: Failed to execute kernel!\n \t %s \n", oclErrorString(error));
+		return;
 	}
 #ifdef OCL_PROFILING
 	else {
@@ -169,6 +169,10 @@ void CLSequence::execute() {
 	initKernelArgs();
 	for each (CLimKernel kernel in kernels)
 	{
-		runKernel(kernel);
+
+		for (int i = 0; i < 5; i++)
+		{
+			runKernel(kernel);
+		}
 	}
 }
