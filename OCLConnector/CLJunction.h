@@ -23,7 +23,7 @@ public:
 	*/
 	void execute() {
 		// For each source
-/*		for each (clim_mem_object *source in dataSources)
+		/*for each (clim_mem_object *source in dataSources)
 		{
 			// Set current source 
 			setCurrentSource(source);

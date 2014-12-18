@@ -27,10 +27,6 @@ public:
 
 	void setConnector(CLConnector &connector);
 
-private:
-	void setImageKernelArgs();
-	
-protected:
 
 	/************************************************************************/
 	/* Structure to keep track of the image data in the device memory       */
@@ -54,9 +50,14 @@ protected:
 
 	} clim_mem_object;
 
+private:
+	void setImageKernelArgs();
+	
+protected:
+
 	std::vector<clim_mem_object> dataSources;
 	std::map<clim_mem_object*, CLimKernel*> kernelToMemObj;
-	std::vector<cl_mem> kernelOutputs;
+	std::vector<clim_mem_object> kernelOutputs;
 
 	/************************************************************************/
 	/* Specialization tools                                                 */
@@ -70,7 +71,7 @@ protected:
 	template<typename Targ>
 	cl_mem allocateGlobalMemobject(
 		Targ* arg, size_t size,
-		cl_mem_flags flags = CL_MEM_READ_WRITE) {
+		cl_mem_flags flags = CL_MEM_READ_WRITE, size_t width = NULL, size_t height = NULL) {
 
 		printf("Setting pointer arg\n");
 
@@ -89,7 +90,9 @@ protected:
 			printf("Data successfully copied to GPU's global memory!\n");
 		}
 		else {
-			kernelOutputs.push_back(argPtr);
+			clim_mem_object mem_arg;
+			mem_arg.construct(argPtr, width, height);
+			kernelOutputs.push_back(mem_arg);
 		}
 
 		return argPtr;
@@ -175,6 +178,21 @@ public:
 		//kernelToMemObj.insert(&kernel, memObj);
 	}
 
+	void addDataSource(cl_mem transferable, size_t width, size_t height) {
+		/*CLSequence::clim_mem_object transferable;
+		transferable.construct(handle, NULL, NULL);*/
+		clim_mem_object t;
+		t.construct(transferable, width, height);
+		dataSources.push_back(t);
+		size_t outSize = 510*510*3;
+		unsigned char* data = new unsigned char[outSize];
+		addKernelArg(kernels[0], transferable, 0);
+		/*
+		clim_mem_object mem_arg;
+		mem_arg.construct(transferable, 510, 510);
+		kernelOutputs.push_back(mem_arg);*/
+	}
+
 	virtual void addKernels() = 0;
 
 	/* 
@@ -189,6 +207,10 @@ public:
 	void initKernelArgs();
 
 	virtual void execute();
+
+	std::vector<clim_mem_object> getKernelOutputs() {
+		return kernelOutputs;
+	}
 };
 
 #endif

@@ -12,6 +12,8 @@
 #include <string>
 #include <time.h>
 
+#include "SSH.h"
+/*
 #define OCL_PROFILING
 #include "CLim.h"
 #include "CLConnector.h"
@@ -20,7 +22,7 @@
 #include "Multioperation.h"
 #include "PlainOperation.h"
 #include "ImSubtract.h"
-
+/*
 using namespace clim;
 
 void cpuSubtract(clim::CLim<unsigned char> &im1, clim::CLim<unsigned char> &im2) {
@@ -60,10 +62,12 @@ void subtractExample() {
 		
 	cpuSubtract(image1, image2);
 }
-
+*/
 int main() {
 
-	subtractExample();
+	//subtractExample();
+	SSH ssh;
+	ssh.doit();
 	system("pause");
 }
 

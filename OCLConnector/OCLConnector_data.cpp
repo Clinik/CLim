@@ -4,6 +4,7 @@
 
 #include "CLConnector.h"
 #include "CLSequence.h"
+#include "CLGraph.h"
 
 #include <thread>
 #include <vector>
@@ -26,6 +27,12 @@ void CLConnector::execute() {
 	for each (CLSequence *sequence in sequences)
 	{
 		sequence->addKernels();
+	}
+
+
+	for each (CLGraph::Transmitter* transmitter in CLGraph::edges)
+	{
+		transmitter->attach();
 	}
 
 	for each (CLSequence *sequence in sequences)

@@ -80,7 +80,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="Kernels\data\CLim.hcl" />
-    <None Include="Kernels\plainKernel.cl" />
+    <None Include="Kernels\histogram.cl" />
+    <None Include="Kernels\sobelKernel.cl" />
     <None Include="Kernels\subtract.cl" />
     <None Include="Kernels\subtract2.cl" />
     <None Include="Kernels\test.cl" />
@@ -93,10 +94,12 @@
     <ClCompile Include="OCLConnector_data.cpp" />
     <ClCompile Include="OCLSequence.cpp" />
     <ClCompile Include="Runner.cpp" />
+    <ClCompile Include="CLGraph.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLimKernel.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="Histogram.h" />
     <ClInclude Include="ImSubtract.h" />
     <ClInclude Include="Multioperation.h" />
     <ClInclude Include="CLJunction.h" />
@@ -107,6 +110,8 @@
     <ClInclude Include="CLConnector.h" />
     <ClInclude Include="PlainOperation.h" />
     <ClInclude Include="SeqOperation.h" />
+    <ClInclude Include="SSH.h" />
+    <ClInclude Include="CLGraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

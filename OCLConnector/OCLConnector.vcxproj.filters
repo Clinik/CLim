@@ -22,16 +22,38 @@
     <Filter Include="Header Files\OCLBase">
       <UniqueIdentifier>{4ae71894-e9ba-4084-9997-f529fc533133}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Kernels">
+      <UniqueIdentifier>{c670294a-62cf-423c-b925-e45f46098267}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Kernels\kernel.cl" />
-    <None Include="Kernels\data\CLim.hcl" />
-    <None Include="Kernels\kernel2.cl" />
-    <None Include="Kernels\test.cl" />
-    <None Include="Kernels\test2.cl" />
-    <None Include="Kernels\plainKernel.cl" />
-    <None Include="Kernels\subtract.cl" />
-    <None Include="Kernels\subtract2.cl" />
+    <None Include="Kernels\data\CLim.hcl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\histogram.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\kernel.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\kernel2.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\sobelKernel.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\subtract.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\subtract2.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\test.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\test2.cl">
+      <Filter>Kernels</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Misc.cpp">
@@ -44,6 +66,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OCLSequence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,6 +108,15 @@
     </ClInclude>
     <ClInclude Include="CLSequence.h">
       <Filter>Header Files\Executers</Filter>
+    </ClInclude>
+    <ClInclude Include="Histogram.h">
+      <Filter>Header Files\OCLSpecs</Filter>
+    </ClInclude>
+    <ClInclude Include="CLGraph.h">
+      <Filter>Header Files\OCLBase</Filter>
+    </ClInclude>
+    <ClInclude Include="SSH.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

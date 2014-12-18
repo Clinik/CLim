@@ -39,10 +39,6 @@ public:
 	{
 		addKernel(name.c_str(), { fileName.c_str() }, true, global, local);
 		
-		// Input
-		kernelToMemObj.insert(std::make_pair(&dataSources[0], &kernels[0]));
-		kernelToMemObj.insert(std::make_pair(&dataSources[1], &kernels[0]));
-		// Output
 		addKernelArg(kernels[0], &data[0], outSize, 2, CL_MEM_READ_ONLY);
 	}
 
@@ -52,7 +48,7 @@ public:
 		
 		clFinish(connector->queue);
 		error = clEnqueueReadBuffer(connector->queue,
-		kernelOutputs[0], CL_TRUE, 0, outSize * sizeof(unsigned char), d, 0, NULL, NULL);
+			kernelOutputs[0].cl_data, CL_TRUE, 0, outSize * sizeof(unsigned char), d, 0, NULL, NULL);
 		
 		stbFile f;
 		std::string fileName = ("../images/" + name + ".png");
