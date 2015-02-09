@@ -31,7 +31,7 @@ public:
 		dataSources.push_back(addDataSource(im2));
 		outWidth = im1._width;
 		outHeight = im1._height;
-		outSize = im1._width * im1._height*3;
+		outSize = im1._width * im1._height * 3;
 		data = new unsigned char[outSize];
 	}
 
@@ -54,6 +54,5 @@ public:
 		std::string fileName = ("../images/" + name + ".png");
 		f.write_to_file(std::string(fileName.c_str()), outWidth, outHeight, 3, d);
 	}
-
 
 };

@@ -151,10 +151,6 @@ namespace clim {
 			stbFile f;
 			f.load_from_file(fileName);
 			allocData(f.width, f.height, 3);
-			printf(" dataa");
-			for (int i = 0; i < 6; i++)
-				printf(" %u ", f.data[i]);
-			printf("\n");
 			std::copy(f.data, f.data + size(), _data);
 		}
 

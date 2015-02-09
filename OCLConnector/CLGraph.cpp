@@ -18,7 +18,7 @@ void CLGraph::Node::connect(CLGraph::Node &node) {
 void CLGraph::Transmitter::attach() {
 	for each (CLSequence::clim_mem_object mem in this->from->sequence->getKernelOutputs())
 	{
-		to->sequence->addDataSource(mem.cl_data, 510, 510);
+		to->sequence->addDataSource(mem.cl_data, 512, 512);
 	}
 }
 

@@ -24,7 +24,7 @@ void CLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex
 
 	cl_int error;
 
-	printf("Setting buffer arg\n");
+	//printf("Setting buffer arg\n");
 
 	if (argIndex == NULL) {
 		argIndex = kernel.numArgs;
@@ -35,7 +35,7 @@ void CLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex
 		printf("ERROR: Failed to set kernel arguments!\n \t %s \n", oclErrorString(error));
 	}
 
-	printf("Kernel arguments[%d] successfully set!\n\n", kernel.numArgs);
+	//printf("Kernel arguments[%d] successfully set!\n\n", kernel.numArgs);
 	kernel.numArgs = kernel.numArgs + 1;
 }
 
@@ -71,16 +71,23 @@ void CLSequence::runKernel(CLimKernel &kernel) {
 	printf("Running kernel: %s...\n", kernel.name);
 	cl_int error;
 
-	size_t globalThreads[] = { kernel.globalndRange.getSize(0), kernel.globalndRange.getSize(1), 512 };
-	size_t localThreads[] = { kernel.localndRange.getSize(0), kernel.localndRange.getSize(0), 1 };
+	size_t *globalThreads = new size_t[kernel.globalndRange.getDims()];
+	size_t *localThreads = new size_t[kernel.globalndRange.getDims()];
+
+	for (int i = 0; i < kernel.globalndRange.getDims(); ++i)
+	{
+		globalThreads[i] = kernel.globalndRange.getSize(i);
+		localThreads[i] = kernel.localndRange.getSize(i);
+	}
 
 	cl_event event;
-	error = clEnqueueNDRangeKernel(
-		connector->queue, kernel.kernel,
-		kernel.globalndRange.getDims(),
-		NULL,
-		globalThreads, localThreads,
-		0, NULL, &event);
+
+		error = clEnqueueNDRangeKernel(
+			connector->queue, kernel.kernel,
+			kernel.globalndRange.getDims(),
+			NULL,
+			globalThreads, localThreads,
+			0, NULL, &event);
 	
 	if (error)
 	{
@@ -114,7 +121,7 @@ CLimKernel CLSequence::makeKernelFromSource(const char* kernel_src, const char* 
 	/************************************************************************/
 	/* Make a program from the kernel source                                */
 	/************************************************************************/
-	printf("Making program from source...\n");
+	//printf("Making program from source...\n");
 	const char *source = kernel_src;
 	program = clCreateProgramWithSource(connector->context, 1, &source, NULL, &error);
 	if (!program)
@@ -122,12 +129,12 @@ CLimKernel CLSequence::makeKernelFromSource(const char* kernel_src, const char* 
 		printf("Error: Failed to create program!\n \t %s \n", oclErrorString(error));
 		return climKernel;
 	}
-	printf("Program successfully created!\n\n");
+	//printf("Program successfully created!\n\n");
 
 	/************************************************************************/
 	/* Build the program                                                    */
 	/************************************************************************/
-	printf("Building program...\n");
+	//printf("Building program...\n");
 	error = clBuildProgram(program, 1, &(connector->deviceUsed), NULL, NULL, NULL);
 	if (error != CL_SUCCESS)
 	{
@@ -139,12 +146,12 @@ CLimKernel CLSequence::makeKernelFromSource(const char* kernel_src, const char* 
 		printf("%s\n", buffer);
 		return climKernel;
 	}
-	printf("Program successfully built!\n\n");
+	//printf("Program successfully built!\n\n");
 
 	/************************************************************************/
 	/* Create a kernel from the program                                     */
 	/************************************************************************/
-	printf("Creating kernel...\n");
+	//printf("Creating kernel...\n");
 	climKernel.kernel = clCreateKernel(program, kernelName, &error);
 	if (!climKernel.kernel || error != CL_SUCCESS)
 	{
@@ -170,7 +177,7 @@ void CLSequence::execute() {
 	for each (CLimKernel kernel in kernels)
 	{
 
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < 1; i++)
 		{
 			runKernel(kernel);
 		}

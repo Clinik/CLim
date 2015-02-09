@@ -42,16 +42,22 @@
     <None Include="Kernels\sobelKernel.cl">
       <Filter>Kernels</Filter>
     </None>
-    <None Include="Kernels\subtract.cl">
-      <Filter>Kernels</Filter>
-    </None>
-    <None Include="Kernels\subtract2.cl">
-      <Filter>Kernels</Filter>
-    </None>
     <None Include="Kernels\test.cl">
       <Filter>Kernels</Filter>
     </None>
     <None Include="Kernels\test2.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\sobel_v1.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\sobel_v2.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\RGBtoGray.cl">
+      <Filter>Kernels</Filter>
+    </None>
+    <None Include="Kernels\subtract.cl">
       <Filter>Kernels</Filter>
     </None>
   </ItemGroup>
@@ -117,6 +123,9 @@
     </ClInclude>
     <ClInclude Include="SSH.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RGBtoGray.h">
+      <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

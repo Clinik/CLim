@@ -50,8 +50,8 @@ void subtractExample() {
 	clim::CLim<unsigned char> image1(std::string("../images/lena.jpg"));
 	clim::CLim<unsigned char> image2(std::string("../images/lenaR.jpg"));
 	
-	ImSubtract subtract(std::string("subtract"), NDRange(510, 510), NDRange(1, 1));
-	//ImSubtract subtract2(std::string("subtract2"), NDRange(510, 510, 3), NDRange(1, 1, 1));
+	ImSubtract subtract(std::string("subtract"), NDRange(512, 512), NDRange(1, 1));
+	//ImSubtract subtract2(std::string("subtract2"), NDRange(512, 512, 3), NDRange(1, 1, 1));
 	clContext.addSequence(subtract);
 	//clContext.addSequence(subtract2);
 

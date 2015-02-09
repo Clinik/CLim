@@ -52,7 +52,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;CL_DIR="$(ProjectDir)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>../CLim;$(AMDAPPSDKROOT)\include;$(CUDA_PATH)/include;$(SolutionDir)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../CLim;$(AMDAPPSDKROOT)\include;$(CUDA_PATH)/include;$(SolutionDir);</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -81,9 +81,11 @@
   <ItemGroup>
     <None Include="Kernels\data\CLim.hcl" />
     <None Include="Kernels\histogram.cl" />
+    <None Include="Kernels\RGBtoGray.cl" />
     <None Include="Kernels\sobelKernel.cl" />
+    <None Include="Kernels\sobel_v1.cl" />
+    <None Include="Kernels\sobel_v2.cl" />
     <None Include="Kernels\subtract.cl" />
-    <None Include="Kernels\subtract2.cl" />
     <None Include="Kernels\test.cl" />
     <None Include="Kernels\kernel.cl" />
     <None Include="Kernels\kernel2.cl" />
@@ -109,6 +111,7 @@
     <ClInclude Include="OclErrors.h" />
     <ClInclude Include="CLConnector.h" />
     <ClInclude Include="PlainOperation.h" />
+    <ClInclude Include="RGBtoGray.h" />
     <ClInclude Include="SeqOperation.h" />
     <ClInclude Include="SSH.h" />
     <ClInclude Include="CLGraph.h" />
