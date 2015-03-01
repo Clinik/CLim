@@ -85,9 +85,6 @@
     <ClInclude Include="SeqOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
-    <ClInclude Include="Multioperation.h">
-      <Filter>Header Files\OCLSpecs</Filter>
-    </ClInclude>
     <ClInclude Include="PlainOperation.h">
       <Filter>Header Files\OCLSpecs</Filter>
     </ClInclude>
@@ -105,9 +102,6 @@
     </ClInclude>
     <ClInclude Include="Defines.h">
       <Filter>Header Files\OCLBase</Filter>
-    </ClInclude>
-    <ClInclude Include="CLJunction.h">
-      <Filter>Header Files\Executers</Filter>
     </ClInclude>
     <ClInclude Include="CLConnector.h">
       <Filter>Header Files\OCLBase</Filter>

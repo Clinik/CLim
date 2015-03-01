@@ -24,8 +24,6 @@ void CLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex
 
 	cl_int error;
 
-	//printf("Setting buffer arg\n");
-
 	if (argIndex == NULL) {
 		argIndex = kernel.numArgs;
 	}
@@ -35,7 +33,6 @@ void CLSequence::addKernelArg(CLimKernel &kernel, cl_mem argPtr, size_t argIndex
 		printf("ERROR: Failed to set kernel arguments!\n \t %s \n", oclErrorString(error));
 	}
 
-	//printf("Kernel arguments[%d] successfully set!\n\n", kernel.numArgs);
 	kernel.numArgs = kernel.numArgs + 1;
 }
 

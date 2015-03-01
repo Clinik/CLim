@@ -11,8 +11,6 @@
 #include "CLim.h"
 #include "CLimKernel.h"
 
-//class CLConnector;
-//#include "CLSequence.h"
 class CLSequence;
 
 class CLConnector {
@@ -30,15 +28,22 @@ public:
 	cl_int MAX_WORKGROUP_SIZE;
 
 public:
-	/************************************************************************/
-	/* In the constructor we initialize the context to work with            */
-	/************************************************************************/
-	CLConnector(cl_device_type deviceType = CL_DEVICE_TYPE_GPU) {
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// <summary> Constructor.
+	/// 		Initiating the OpenCL platform, a device on it and a command queue. 
+	/// </summary>
+	///
+	/// <param name="deviceType">	Type of the device. 
+	/// 		Possible values:
+	/// 			CL_DEVICE_TYPE_CPU,
+	///				CL_DEVICE_TYPE_GPU (default)							
+	/// </param>
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	CLConnector(cl_device_type deviceType = CL_DEVICE_TYPE_CPU) {
 		cl_int error;
 
-		/*
-		* Get platform info
-		*/
+		// Get platform info
 		cl_platform_id platformsStore[100];
 		cl_uint platformsNum = 0;
 		error = clGetPlatformIDs(100, platformsStore, &platformsNum);
@@ -59,7 +64,6 @@ public:
 			error = clGetPlatformInfo(platformsStore[i], CL_PLATFORM_EXTENSIONS, 10240, buffer, NULL);
 			printf("  EXTENSIONS = %s\n", buffer);
 		}
-		/********************************************************************************************/
 		
 		printf("------------------------Loading OpenCL----------------------------\n\n");
 		cl_platform_id platforms;
@@ -71,23 +75,31 @@ public:
 		}
 		printf("Platform IDs successfully obtained!\n\n");
 		
-		error = initDevice(error, platforms, deviceType);
+		initDevice(platforms, deviceType);
 
 	}
 private:
-	/********************************************************************************/
-	/* Get a device, context and command queue for the platform of type deviceType***/
-	/********************************************************************************/
-	cl_int initDevice(cl_int error, cl_platform_id platforms, cl_device_type deviceType)
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// <summary>	
+	/// 		Initialises the device on the given platform with the specified device type. 	
+	/// </summary>
+	///
+	/// <param name="platforms"> 	The platform. </param>
+	/// <param name="deviceType">	Type of the device. </param>
+	///
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	void initDevice(cl_platform_id platforms, cl_device_type deviceType)
 	{
-		/*
-		* Device info
-		*/
+		cl_int error;
+
+		// Get the device infos
 		cl_device_id devicesStore[100];
 		cl_uint devicesNum = 0;
-		// CL_CHECK(clGetDeviceIDs(NULL, CL_DEVICE_TYPE_ALL, 100, devices, &devices_n));
+
 		error = clGetDeviceIDs(platforms, CL_DEVICE_TYPE_ALL, 100, devicesStore, &devicesNum);
 
+		// Print the available devices
 		printf("OpenCL devices:\n");
 		for (int i = 0; i < devicesNum; i++)
 		{
@@ -118,11 +130,7 @@ private:
 			printf("  DEVICE_GLOBAL_MEM_SIZE = %llu\n", (unsigned long long)buf_ulong);
 		}
 
-		/***************************************************************************************************************/
-
-		/************************************************************************/
-		/* Get devices                                                          */
-		/************************************************************************/
+		// Get the device to use
 		printf("Getting devices....\n");
 		error = clGetDeviceIDs(platforms, deviceType, 1, &deviceUsed, NULL);
 
@@ -131,9 +139,7 @@ private:
 		}
 		printf("Devices successfully obtained!\n\n");
 
-		/************************************************************************/
-		/* Create a context                                                     */
-		/************************************************************************/
+		// Create a context on the used device
 		printf("Creating context...\n");
 		context = clCreateContext(0, 1, &deviceUsed, NULL, NULL, &error);
 		if (!context)
@@ -142,9 +148,7 @@ private:
 		}
 		printf("Context successfully created\n\n");
 
-		/************************************************************************/
-		/* Create command queue                                                 */
-		/************************************************************************/
+		// Create command queue on the context and device
 		printf("Creating a command queue....\n");
 		queue = clCreateCommandQueue(
 			context,
@@ -161,16 +165,30 @@ private:
 		}
 		printf("Command queue successfully created!\n\n");
 		printf("OpenCl is ready to operate!\n");
-		printf("------------------------------------------------------------------\n\n");	return error;
+		printf("------------------------------------------------------------------\n\n");
 	}
 public:
 	~CLConnector(){};
 	
 protected:
+	/// <summary>	The sequences to run on the command queue.
+	/// 		List of sequences defines an order which the kernels will run.
+	/// </summary>
 	std::list<CLSequence*> sequences;
 public:
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// <summary>	Adds a sequence. </summary>
+	///
+	/// <param name="sequence"> The sequence to add to the sequences list. </param>
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	void addSequence(CLSequence &sequence);
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	/// <summary>	Removes the sequence described by sequence. </summary>
+	///
+	/// <param name="sequence">	The sequence to remove from the sequences list. </param>
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	void removeSequence(CLSequence &sequence);
 
 	void execute();

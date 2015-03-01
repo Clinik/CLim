@@ -23,18 +23,18 @@ void CLConnector::removeSequence(CLSequence &sequence) {
 }
 
 void CLConnector::execute() {
-
+	// Setup the sequence's kernels
 	for each (CLSequence *sequence in sequences)
 	{
 		sequence->addKernels();
 	}
 
-
+	// Make the connections between the sequences
 	for each (CLGraph::Transmitter* transmitter in CLGraph::edges)
 	{
 		transmitter->attach();
 	}
-
+	// Run the sequences
 	for each (CLSequence *sequence in sequences)
 	{
 		sequence->execute();
